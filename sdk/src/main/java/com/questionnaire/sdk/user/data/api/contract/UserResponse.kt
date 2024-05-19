@@ -1,0 +1,14 @@
+package com.questionnaire.sdk.user.data.api.contract
+
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+
+@Serializable
+data class UserResponse(
+    val id: String,
+    val email: String,
+    val status: String,
+    @SerialName("created_at")
+    val createdAt: String
+)
