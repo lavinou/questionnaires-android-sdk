@@ -4,15 +4,12 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,7 +23,6 @@ import com.questionnaire.sdk.question.domain.model.QuestionStatus
 import com.questionnaire.sdk.question.presentaion.action.QuestionAction
 import com.questionnaire.sdk.question.presentaion.component.QuestionView
 import com.questionnaire.sdk.question.presentaion.viewmodel.QuestionViewModel
-import com.questionnaire.sdk.questionnaire.presentation.viewmodel.QuestionnaireViewModel
 import com.questionnaire.sdk.user.presentation.viewmodel.UserViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -40,26 +36,31 @@ internal fun QuestionnaireBottomSheetDialog(
     val questionViewModel: QuestionViewModel = koinViewModel()
     val questionState by questionViewModel.state.collectAsState()
 
-     val userViewModel: UserViewModel = koinViewModel()
+    val userViewModel: UserViewModel = koinViewModel()
     val user by userViewModel.state.collectAsState()
 
     LaunchedEffect(key1 = user, block = {
         user?.let {
-            questionViewModel.dispatch(QuestionAction.GetCurrentQuestion(
-                questionnaireId = id,
-                takerId = it.id
-            ))
+            questionViewModel.dispatch(
+                QuestionAction.GetCurrentQuestion(
+                    questionnaireId = id,
+                    takerId = it.id
+                )
+            )
         }
     })
 
     ModalBottomSheet(
         modifier = Modifier,
-        onDismissRequest = onDismiss) {
+        onDismissRequest = onDismiss
+    ) {
 
-        Column(modifier = Modifier
-            .animateContentSize()
-            .navigationBarsPadding()
-            .padding(8.dp)) {
+        Column(
+            modifier = Modifier
+                .animateContentSize()
+                .navigationBarsPadding()
+                .padding(8.dp)
+        ) {
             questionState.question?.let { question ->
                 QuestionView(
                     question = question,
@@ -68,7 +69,7 @@ internal fun QuestionnaireBottomSheetDialog(
                 )
             }
 
-            if(questionState.status == QuestionStatus.COMPLETED) {
+            if (questionState.status == QuestionStatus.COMPLETED) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(text = "Taker Completed Questionnaire")
                     Row(
@@ -80,8 +81,7 @@ internal fun QuestionnaireBottomSheetDialog(
                         }
                     }
                 }
-            }
-            else
+            } else
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -91,10 +91,12 @@ internal fun QuestionnaireBottomSheetDialog(
 
                     questionState.previous?.let {
                         Button(onClick = {
-                            questionViewModel.dispatch(QuestionAction.GetPreviousQuestion(
-                                questionnaireId = id,
-                                takerId = user?.id ?: ""
-                            ))
+                            questionViewModel.dispatch(
+                                QuestionAction.GetPreviousQuestion(
+                                    questionnaireId = id,
+                                    takerId = user?.id ?: ""
+                                )
+                            )
                         }) {
                             Text(text = "Previous")
                         }
@@ -104,10 +106,12 @@ internal fun QuestionnaireBottomSheetDialog(
 
                     Button(
                         onClick = {
-                            questionViewModel.dispatch(QuestionAction.GetNextQuestion(
-                                questionnaireId = id,
-                                takerId = user?.id ?: ""
-                            ))
+                            questionViewModel.dispatch(
+                                QuestionAction.GetNextQuestion(
+                                    questionnaireId = id,
+                                    takerId = user?.id ?: ""
+                                )
+                            )
                         },
                         enabled = questionState.answers.isNotEmpty()
                     ) {

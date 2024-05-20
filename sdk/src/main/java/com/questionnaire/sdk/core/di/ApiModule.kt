@@ -8,16 +8,18 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
-fun apiModule(apiKey: String) = module {
+internal fun apiModule(apiKey: String) = module {
 
-    single { HttpClient(CIO) {
-        install(ContentNegotiation) {
-            json(Json {
-                ignoreUnknownKeys = true
-            })
+    single {
+        HttpClient(CIO) {
+            install(ContentNegotiation) {
+                json(Json {
+                    ignoreUnknownKeys = true
+                })
+            }
+
         }
+    }
 
-    } }
-
-    single { ApiClient(client = get(), apiKey = apiKey)}
+    single { ApiClient(client = get(), apiKey = apiKey) }
 }

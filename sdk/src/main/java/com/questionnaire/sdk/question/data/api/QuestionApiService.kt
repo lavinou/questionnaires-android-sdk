@@ -11,12 +11,18 @@ internal class QuestionApiService constructor(
 ) {
 
     suspend fun currentQuestion(questionnaireId: String, takerId: String): CurrentQuestionResponse {
-        return apiClient.get<CurrentQuestionResponse>("questionnaires/$questionnaireId/current/", queryParams = mapOf(
-            "takerId" to takerId
-        )).getOrThrow()
+        return apiClient.get<CurrentQuestionResponse>(
+            "questionnaires/$questionnaireId/current/", queryParams = mapOf(
+                "takerId" to takerId
+            )
+        ).getOrThrow()
     }
 
-    suspend fun nextQuestion(questionnaireId: String, takerId: String, request: NextQuestionRequest): CurrentQuestionResponse {
+    suspend fun nextQuestion(
+        questionnaireId: String,
+        takerId: String,
+        request: NextQuestionRequest
+    ): CurrentQuestionResponse {
         return apiClient.post<NextQuestionRequest, CurrentQuestionResponse>(
             resource = "questionnaires/$questionnaireId/next/",
             queryParams = mapOf(
@@ -26,7 +32,10 @@ internal class QuestionApiService constructor(
         ).getOrThrow()
     }
 
-    suspend fun previousQuestion(questionnaireId: String, takerId: String): CurrentQuestionResponse {
+    suspend fun previousQuestion(
+        questionnaireId: String,
+        takerId: String
+    ): CurrentQuestionResponse {
         return apiClient.get<CurrentQuestionResponse>(
             resource = "questionnaires/$questionnaireId/previous/",
             queryParams = mapOf(

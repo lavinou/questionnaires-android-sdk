@@ -10,26 +10,36 @@ import com.questionnaire.sdk.user.presentation.viewmodel.UserViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-fun userModule(context: Context) = module {
+internal fun userModule(context: Context) = module {
 
-    single { UserApiService(
-        apiClient = get()
-    ) }
+    single {
+        UserApiService(
+            apiClient = get()
+        )
+    }
 
-    single<UserRepository>{ DefaultUserRepository(
-        service = get(),
-        context = context
-    ) }
+    single<UserRepository> {
+        DefaultUserRepository(
+            service = get(),
+            context = context
+        )
+    }
 
-    factory { GetOrCreateUserUseCase(
-        repository = get()
-    ) }
+    factory {
+        GetOrCreateUserUseCase(
+            repository = get()
+        )
+    }
 
-    single { UserManager(
-        getOrCreateUserUseCase = get()
-    ) }
+    single {
+        UserManager(
+            getOrCreateUserUseCase = get()
+        )
+    }
 
-    viewModel { UserViewModel(
-        manager = get()
-    ) }
+    viewModel {
+        UserViewModel(
+            manager = get()
+        )
+    }
 }

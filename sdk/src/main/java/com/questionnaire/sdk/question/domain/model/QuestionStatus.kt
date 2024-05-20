@@ -1,6 +1,6 @@
 package com.questionnaire.sdk.question.domain.model
 
-enum class QuestionStatus {
+internal enum class QuestionStatus {
     RESET,
     STARTED,
     COMPLETED;
@@ -8,7 +8,7 @@ enum class QuestionStatus {
     companion object {
 
         fun from(value: String): QuestionStatus {
-            return when(value) {
+            return when (value) {
                 "started" -> STARTED
                 "completed" -> COMPLETED
                 "reset" -> RESET

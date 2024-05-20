@@ -14,14 +14,17 @@ import org.koin.core.context.startKoin
 class Questionnaire private constructor(private val builder: Builder) {
 
     private val scope = CoroutineScope(Dispatchers.IO)
+
     init {
         startKoin {
-            modules(listOf(
-                apiModule(apiKey = builder.apiKey),
-                userModule(context = builder.activity),
-                questionnaireModule(),
-                questionModule()
-            ))
+            modules(
+                listOf(
+                    apiModule(apiKey = builder.apiKey),
+                    userModule(context = builder.activity),
+                    questionnaireModule(),
+                    questionModule()
+                )
+            )
         }
     }
 

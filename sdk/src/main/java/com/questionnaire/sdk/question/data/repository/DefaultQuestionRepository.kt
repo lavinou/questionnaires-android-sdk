@@ -9,13 +9,13 @@ import com.questionnaire.sdk.question.domain.repository.QuestionRepository
 
 internal class DefaultQuestionRepository constructor(
     private val service: QuestionApiService
-): QuestionRepository {
+) : QuestionRepository {
 
     override suspend fun previousQuestion(
         questionnaireId: String,
         takerId: String
     ): CurrentQuestion {
-        val current  = service.previousQuestion(
+        val current = service.previousQuestion(
             questionnaireId = questionnaireId,
             takerId = takerId
         )

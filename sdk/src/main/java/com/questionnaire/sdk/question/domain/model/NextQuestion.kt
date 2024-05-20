@@ -2,11 +2,9 @@ package com.questionnaire.sdk.question.domain.model
 
 import com.questionnaire.sdk.answer.domain.model.CurrentAnswer
 
-typealias QuestionId = String
-typealias AnswerId = String
+internal typealias QuestionId = String
 
-
-data class NextQuestion(
+internal data class NextQuestion(
     val current: QuestionId,
     val answers: List<CurrentAnswer>
 )

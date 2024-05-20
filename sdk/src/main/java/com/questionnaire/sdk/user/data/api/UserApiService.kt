@@ -10,7 +10,7 @@ internal class UserApiService constructor(
 ) {
 
     suspend fun createUser(): UserResponse {
-        val result = apiClient.post<Unit,UserResponse>("users/takers/", data = Unit)
+        val result = apiClient.post<Unit, UserResponse>("users/takers/", data = Unit)
         return result.getOrThrow()
     }
 

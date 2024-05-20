@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 internal class UserViewModel constructor(
     private val manager: UserManager
-): ViewModel() {
+) : ViewModel() {
 
     private val _state = MutableStateFlow<User?>(null)
     val state: StateFlow<User?> = _state
@@ -20,7 +20,7 @@ internal class UserViewModel constructor(
         viewModelScope.launch {
             val user = manager.current()
             _state.update {
-                 user
+                user
             }
         }
     }

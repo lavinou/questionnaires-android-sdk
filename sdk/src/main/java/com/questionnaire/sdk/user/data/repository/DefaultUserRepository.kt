@@ -11,7 +11,7 @@ import com.questionnaire.sdk.user.domain.repository.UserRepository
 internal class DefaultUserRepository constructor(
     private val service: UserApiService,
     context: Context
-): UserRepository {
+) : UserRepository {
 
     private val preferences: SharedPreferences = context.getSharedPreferences(
         USER_PREF, Context.MODE_PRIVATE
@@ -22,7 +22,7 @@ internal class DefaultUserRepository constructor(
 
         val id = preferences.getString(TAKER_ID, null) ?: return null
 
-        if(id == inMemoryUser?.id)
+        if (id == inMemoryUser?.id)
             return inMemoryUser
 
         val user = service.getUser(id = id)?.toUser()
@@ -41,7 +41,7 @@ internal class DefaultUserRepository constructor(
     }
 
     override suspend fun create(): User {
-        val user =  service.createUser().toUser()
+        val user = service.createUser().toUser()
 
         preferences.edit {
             putString(TAKER_ID, user.id)

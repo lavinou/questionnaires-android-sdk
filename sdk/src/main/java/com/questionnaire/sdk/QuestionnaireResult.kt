@@ -2,11 +2,11 @@ package com.questionnaire.sdk
 
 sealed interface QuestionnaireResult {
 
-    object Complete: QuestionnaireResult
+    data object Complete : QuestionnaireResult
 
-    object NotShown: QuestionnaireResult
+    data object NotShown : QuestionnaireResult
 
-    object AlreadyShown: QuestionnaireResult
+    data object AlreadyShown : QuestionnaireResult
 
-    object Failed: QuestionnaireResult
+    data object Failed : QuestionnaireResult
 }

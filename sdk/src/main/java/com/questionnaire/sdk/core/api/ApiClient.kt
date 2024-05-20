@@ -1,6 +1,5 @@
 package com.questionnaire.sdk.core.api
 
-import android.util.Log
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.HttpRequestBuilder
@@ -47,7 +46,10 @@ internal open class ApiClient constructor(
 }
 
 @OptIn(InternalAPI::class)
-internal suspend inline fun <reified Response> ApiClient.get(resource: String, queryParams: Map<String, String> = emptyMap()): Result<Response> {
+internal suspend inline fun <reified Response> ApiClient.get(
+    resource: String,
+    queryParams: Map<String, String> = emptyMap()
+): Result<Response> {
 
     val response = client.get {
         setUrl(resource, queryParams)
@@ -58,7 +60,7 @@ internal suspend inline fun <reified Response> ApiClient.get(resource: String, q
 
     }
 
-    if(response.status.value >= 400) {
+    if (response.status.value >= 400) {
         return Result.failure(Exception(""))
     }
 
@@ -80,14 +82,17 @@ internal suspend inline fun <reified Request, reified Response> ApiClient.post(
         contentType(ContentType.Application.Json)
     }
 
-    if(response.status.value >= 400) {
+    if (response.status.value >= 400) {
         return Result.failure(Exception(""))
     }
 
     return Result.success(response.body())
 }
 
-internal suspend inline fun <reified Request, reified Response> ApiClient.put(resource: String, data: Request): Result<Response> {
+internal suspend inline fun <reified Request, reified Response> ApiClient.put(
+    resource: String,
+    data: Request
+): Result<Response> {
 
     val response = client.put {
         setUrl(resource)
@@ -98,14 +103,17 @@ internal suspend inline fun <reified Request, reified Response> ApiClient.put(re
         contentType(ContentType.Application.Json)
     }
 
-    if(response.status.value >= 400) {
+    if (response.status.value >= 400) {
         return Result.failure(Exception(""))
     }
 
     return Result.success(response.body())
 }
 
-internal suspend inline fun <reified Request, reified Response> ApiClient.patch(resource: String, data: Request): Result<Response> {
+internal suspend inline fun <reified Request, reified Response> ApiClient.patch(
+    resource: String,
+    data: Request
+): Result<Response> {
 
     val response = client.patch {
         setUrl(resource)
@@ -116,14 +124,17 @@ internal suspend inline fun <reified Request, reified Response> ApiClient.patch(
         contentType(ContentType.Application.Json)
     }
 
-    if(response.status.value >= 400) {
+    if (response.status.value >= 400) {
         return Result.failure(Exception(""))
     }
 
     return Result.success(response.body())
 }
 
-internal suspend inline fun <reified Request, reified Response> ApiClient.delete(resource: String, data: Request? = null): Result<Response> {
+internal suspend inline fun <reified Request, reified Response> ApiClient.delete(
+    resource: String,
+    data: Request? = null
+): Result<Response> {
 
     val response = client.delete {
         setUrl(resource)
@@ -136,7 +147,7 @@ internal suspend inline fun <reified Request, reified Response> ApiClient.delete
         contentType(ContentType.Application.Json)
     }
 
-    if(response.status.value >= 400) {
+    if (response.status.value >= 400) {
         return Result.failure(Exception(""))
     }
 

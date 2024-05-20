@@ -7,19 +7,25 @@ import com.questionnaire.sdk.question.presentaion.viewmodel.QuestionViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-fun questionModule() = module {
+internal fun questionModule() = module {
 
-    single { QuestionApiService(
-        apiClient = get()
-    ) }
+    single {
+        QuestionApiService(
+            apiClient = get()
+        )
+    }
 
-    single<QuestionRepository>{ DefaultQuestionRepository(
-        service = get()
-    ) }
+    single<QuestionRepository> {
+        DefaultQuestionRepository(
+            service = get()
+        )
+    }
 
-    viewModel { QuestionViewModel(
-        repository = get()
-    ) }
+    viewModel {
+        QuestionViewModel(
+            repository = get()
+        )
+    }
 
 
 }

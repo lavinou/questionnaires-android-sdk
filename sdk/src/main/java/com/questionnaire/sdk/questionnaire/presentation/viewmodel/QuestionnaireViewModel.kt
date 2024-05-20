@@ -6,7 +6,7 @@ import com.questionnaire.sdk.questionnaire.domain.repository.QuestionnaireReposi
 
 internal class QuestionnaireViewModel constructor(
     private val repository: QuestionnaireRepository
-): ViewModel() {
+) : ViewModel() {
 
 
 }

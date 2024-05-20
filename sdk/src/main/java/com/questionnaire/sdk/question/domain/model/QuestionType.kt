@@ -1,6 +1,6 @@
 package com.questionnaire.sdk.question.domain.model
 
-enum class QuestionType {
+internal enum class QuestionType {
     TEXT,
     RADIO,
     BOOLEAN,
@@ -10,13 +10,13 @@ enum class QuestionType {
     companion object {
 
         fun from(value: String): QuestionType {
-            return when(value) {
+            return when (value) {
                 "text" -> TEXT
                 "radio" -> RADIO
                 "boolean" -> BOOLEAN
                 "checkbox" -> CHECKBOX
                 "select" -> SELECT
-                else ->  TEXT
+                else -> TEXT
             }
         }
     }
