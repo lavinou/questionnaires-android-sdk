@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val questionnaire = Questionnaire
-            .Builder(activity = this, apiKey = "")
+            .Builder(activity = this, apiKey = "WAljG81g.VjwAqEf9OOQ4ULqfUclxxU6JSzdjkHp2")
             .build()
 
         setContent {
@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Greeting("Android", onClick = {
-                        questionnaire.send(event = QuestionnaireEvent("Test"))
+                        questionnaire.launch("19ee0b63-4401-494f-977c-7864221a4a70")
                     })
                 }
             }

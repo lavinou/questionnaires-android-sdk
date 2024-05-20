@@ -13,4 +13,9 @@ internal class UserApiService constructor(
         val result = apiClient.post<Unit,UserResponse>("users/takers/", data = Unit)
         return result.getOrThrow()
     }
+
+    suspend fun getUser(id: String): UserResponse? {
+        return apiClient.get<UserResponse>(resource = "users/takers/$id/")
+            .getOrNull()
+    }
 }

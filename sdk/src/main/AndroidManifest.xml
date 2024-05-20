@@ -6,6 +6,7 @@
     <application>
         <activity
             android:name=".QuestionnaireActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             >
 
         </activity>

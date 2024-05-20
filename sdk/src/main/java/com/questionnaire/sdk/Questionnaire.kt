@@ -3,31 +3,32 @@ package com.questionnaire.sdk
 import android.content.Intent
 import androidx.activity.ComponentActivity
 import com.questionnaire.sdk.core.di.apiModule
-import com.questionnaire.sdk.user.UserManager
+import com.questionnaire.sdk.question.di.questionModule
+import com.questionnaire.sdk.questionnaire.di.questionnaireModule
 import com.questionnaire.sdk.user.di.userModule
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 import org.koin.core.context.startKoin
 
 class Questionnaire private constructor(private val builder: Builder) {
 
-    private val userManager: UserManager
     private val scope = CoroutineScope(Dispatchers.IO)
     init {
         startKoin {
             modules(listOf(
                 apiModule(apiKey = builder.apiKey),
-                userModule(context = builder.activity)
+                userModule(context = builder.activity),
+                questionnaireModule(),
+                questionModule()
             ))
         }
+    }
 
-        userManager = UserManager()
-        scope.launch {
-            userManager.current()
-        }
-
+    fun launch(id: String) {
+        val intent = Intent(builder.activity, QuestionnaireActivity::class.java)
+        intent.putExtra(QuestionnaireActivity.QuestionnaireId, id)
+        builder.activity.startActivity(intent)
     }
 
     val results: Flow<QuestionnaireResult>

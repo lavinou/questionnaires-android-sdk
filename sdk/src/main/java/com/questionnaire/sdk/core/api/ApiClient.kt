@@ -62,10 +62,14 @@ internal suspend inline fun <reified Response> ApiClient.get(resource: String, q
     return Result.success(response.body())
 }
 
-internal suspend inline fun <reified Request, reified Response> ApiClient.post(resource: String, data: Request): Result<Response> {
+internal suspend inline fun <reified Request, reified Response> ApiClient.post(
+    resource: String,
+    data: Request,
+    queryParams: Map<String, String> = emptyMap()
+): Result<Response> {
 
     val response = client.post {
-        setUrl(resource)
+        setUrl(resource, queryParams)
         headers {
             header("Authorization", "$tokenName $apiKey")
         }

@@ -3,35 +3,51 @@ package com.questionnaire.sdk
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.PointerIcon.Companion.Text
-import androidx.compose.ui.semantics.Role.Companion.Button
-import androidx.compose.ui.semantics.SemanticsProperties.Text
-import androidx.compose.ui.text.input.KeyboardType.Companion.Text
-import androidx.compose.ui.unit.dp
 import com.questionnaire.sdk.questionnaire.presentation.component.QuestionnaireBottomSheetDialog
+import com.questionnaire.sdk.user.UserManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.koin.java.KoinJavaComponent.inject
 
 class QuestionnaireActivity: ComponentActivity() {
 
-    @OptIn(ExperimentalMaterial3Api::class)
+    private val userManager: UserManager by inject(UserManager::class.java)
+
+    private val scope = CoroutineScope(Dispatchers.IO)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            Column {
-                Text("QuestionnaireActivity")
 
-                QuestionnaireBottomSheetDialog()
+        val questionnaireId = intent.getStringExtra(QuestionnaireId)
+
+
+
+        setContent {
+            MaterialTheme {
+                scope.launch {
+                    userManager.current()
+                }
+                questionnaireId?.let {
+                    QuestionnaireBottomSheetDialog(
+                        id = questionnaireId,
+                        onDismiss = {
+                            finish()
+                        }
+                    )
+                } ?: finish()
             }
         }
+    }
+
+    internal companion object {
+
+        const val QuestionnaireId = "questionnaireId"
     }
 }

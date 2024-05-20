@@ -1,5 +1,6 @@
-package com.questionnaire.sdk.questionnaire.domain.model
+package com.questionnaire.sdk.question.domain.model
 
+import com.questionnaire.sdk.answer.domain.model.Answer
 import java.time.Instant
 
 internal data class Question(
