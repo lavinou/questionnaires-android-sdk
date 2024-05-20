@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Greeting("Android", onClick = {
-                        questionnaire.launch("19ee0b63-4401-494f-977c-7864221a4a70")
+                        questionnaire.launch("14505320-0ba7-4ce1-b979-c5985bea7b63")
                     })
                 }
             }

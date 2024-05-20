@@ -86,9 +86,29 @@ internal class QuestionViewModel constructor(
                     )
                 }
             }
-            is QuestionAction.OnCheckBoxAnswerChange -> TODO()
-            is QuestionAction.OnRadioAnswerChange -> TODO()
-            is QuestionAction.OnSelectAnswerChange -> TODO()
+            is QuestionAction.OnCheckBoxAnswerChange -> {
+                _state.update {
+                    it.copy(
+                        answers = if(_state.value.answers.contains(action.id)) {
+                            _state.value.answers.filter { id -> id != action.id }
+                        } else {
+                            val updatedList = _state.value.answers.toMutableList()
+                            updatedList.add(action.id)
+                            updatedList
+                        }
+                    )
+                }
+            }
+            is QuestionAction.OnRadioAnswerChange -> {
+                _state.update {
+                    it.copy(
+                        answers = listOf(action.id)
+                    )
+                }
+            }
+            is QuestionAction.OnSelectAnswerChange -> {
+
+            }
             is QuestionAction.OnTextAnswerChange -> TODO()
         }
     }

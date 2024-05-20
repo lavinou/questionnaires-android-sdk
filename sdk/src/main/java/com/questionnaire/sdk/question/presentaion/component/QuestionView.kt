@@ -2,6 +2,7 @@ package com.questionnaire.sdk.question.presentaion.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -26,37 +27,57 @@ internal fun QuestionView(
             style = MaterialTheme.typography.titleMedium
         )
 
-        when(question.type) {
-            QuestionType.TEXT -> TODO()
-            QuestionType.RADIO -> {
-                question.answers.map {
-                    Row {
-                        RadioButton(selected = true , onClick = {  })
-                        AnswerView(it)
-                    }
+        question.answers.map { answer ->
+            when (question.type) {
+                QuestionType.TEXT -> {
 
                 }
-            }
-            QuestionType.BOOLEAN -> {
-                question.answers.map {
+
+                QuestionType.RADIO -> {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        RadioButton(selected = selectedAnswers.contains(it.id) , onClick = {
-                            onAction(QuestionAction.OnBooleanAnswerChange(
-                                id = it.id
-                            ))
+                        RadioButton(selected = selectedAnswers.contains(answer.id), onClick = {
+                            onAction(
+                                QuestionAction.OnRadioAnswerChange(
+                                    id = answer.id
+                                )
+                            )
                         })
-                        AnswerView(it)
+                        AnswerView(answer)
                     }
+                }
+
+                QuestionType.BOOLEAN -> {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        RadioButton(selected = selectedAnswers.contains(answer.id), onClick = {
+                            onAction(
+                                QuestionAction.OnBooleanAnswerChange(
+                                    id = answer.id
+                                )
+                            )
+                        })
+                        AnswerView(answer)
+                    }
+                }
+
+                QuestionType.CHECKBOX -> {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Checkbox(checked = selectedAnswers.contains(answer.id), onCheckedChange = {
+                            onAction(
+                                QuestionAction.OnCheckBoxAnswerChange(
+                                    id = answer.id
+                                )
+                            )
+                        })
+                        AnswerView(answer)
+                    }
+                }
+
+                QuestionType.SELECT -> {
 
                 }
-            }
-            QuestionType.CHECKBOX -> {
-
-            }
-            QuestionType.SELECT -> {
-
             }
         }
+
     }
 
 }
