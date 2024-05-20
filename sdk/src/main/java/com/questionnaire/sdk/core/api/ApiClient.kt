@@ -1,5 +1,6 @@
 package com.questionnaire.sdk.core.api
 
+import android.util.Log
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.HttpRequestBuilder
@@ -14,6 +15,7 @@ import io.ktor.client.request.setBody
 import io.ktor.client.request.url
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
+import io.ktor.util.InternalAPI
 import java.net.URL
 
 internal open class ApiClient constructor(
@@ -44,6 +46,7 @@ internal open class ApiClient constructor(
     }
 }
 
+@OptIn(InternalAPI::class)
 internal suspend inline fun <reified Response> ApiClient.get(resource: String, queryParams: Map<String, String> = emptyMap()): Result<Response> {
 
     val response = client.get {

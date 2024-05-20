@@ -1,10 +1,12 @@
 package com.questionnaire.sdk.questionnaire.presentation.component
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -51,9 +53,11 @@ internal fun QuestionnaireBottomSheetDialog(
     })
 
     ModalBottomSheet(
+        modifier = Modifier,
         onDismissRequest = onDismiss) {
 
         Column(modifier = Modifier
+            .animateContentSize()
             .navigationBarsPadding()
             .padding(8.dp)) {
             questionState.question?.let { question ->
@@ -80,7 +84,8 @@ internal fun QuestionnaireBottomSheetDialog(
             else
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .imePadding(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
 
