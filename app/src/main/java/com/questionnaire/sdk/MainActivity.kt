@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val questionnaire = Questionnaire
-            .Builder(activity = this, apiKey = "")
+            .Builder(activity = this, apiKey = "1ZZEbttb.LU1SmLHe8HwdLcKICmmsT9qnDkklTHC6")
             .build()
 
         setContent {

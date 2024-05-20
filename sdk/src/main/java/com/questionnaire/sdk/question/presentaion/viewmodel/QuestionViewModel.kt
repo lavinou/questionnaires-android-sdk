@@ -2,6 +2,7 @@ package com.questionnaire.sdk.question.presentaion.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.questionnaire.sdk.answer.domain.model.CurrentAnswer
 import com.questionnaire.sdk.question.domain.model.NextQuestion
 import com.questionnaire.sdk.question.domain.repository.QuestionRepository
 import com.questionnaire.sdk.question.presentaion.action.QuestionAction
@@ -82,18 +83,24 @@ internal class QuestionViewModel constructor(
             is QuestionAction.OnBooleanAnswerChange -> {
                 _state.update {
                     it.copy(
-                        answers = listOf(action.id)
+                        answers = listOf(CurrentAnswer(
+                            id = action.id
+                        ))
                     )
                 }
             }
             is QuestionAction.OnCheckBoxAnswerChange -> {
                 _state.update {
                     it.copy(
-                        answers = if(_state.value.answers.contains(action.id)) {
-                            _state.value.answers.filter { id -> id != action.id }
+                        answers = if(_state.value.answers.map { answer -> answer.id }.contains(action.id)) {
+                            _state.value.answers.filter { id -> id.id != action.id }
                         } else {
                             val updatedList = _state.value.answers.toMutableList()
-                            updatedList.add(action.id)
+                            updatedList.add(
+                                CurrentAnswer(
+                                id = action.id
+                            )
+                            )
                             updatedList
                         }
                     )
@@ -102,14 +109,27 @@ internal class QuestionViewModel constructor(
             is QuestionAction.OnRadioAnswerChange -> {
                 _state.update {
                     it.copy(
-                        answers = listOf(action.id)
+                        answers = listOf(
+                            CurrentAnswer(
+                            id = action.id
+                        )
+                        )
                     )
                 }
             }
             is QuestionAction.OnSelectAnswerChange -> {
 
             }
-            is QuestionAction.OnTextAnswerChange -> TODO()
+            is QuestionAction.OnTextAnswerChange -> {
+                _state.update {
+                    it.copy(
+                        answers = listOf(CurrentAnswer(
+                            id = action.id,
+                            value = action.data
+                        ))
+                    )
+                }
+            }
         }
     }
 
