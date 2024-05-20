@@ -6,6 +6,8 @@ import com.questionnaire.sdk.user.data.api.UserApiService
 import com.questionnaire.sdk.user.data.repository.DefaultUserRepository
 import com.questionnaire.sdk.user.domain.repository.UserRepository
 import com.questionnaire.sdk.user.domain.usecase.GetOrCreateUserUseCase
+import com.questionnaire.sdk.user.presentation.viewmodel.UserViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 fun userModule(context: Context) = module {
@@ -25,5 +27,9 @@ fun userModule(context: Context) = module {
 
     single { UserManager(
         getOrCreateUserUseCase = get()
+    ) }
+
+    viewModel { UserViewModel(
+        manager = get()
     ) }
 }

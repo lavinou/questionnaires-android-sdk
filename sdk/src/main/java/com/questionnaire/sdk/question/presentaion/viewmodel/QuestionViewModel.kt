@@ -25,7 +25,7 @@ internal class QuestionViewModel constructor(
                 viewModelScope.launch {
                     val current = repository.currentQuestion(
                         questionnaireId = action.questionnaireId,
-                        takerId = "25afc1f8-9f63-4b0f-9fa2-653436419441"
+                        takerId = action.takerId
                     )
 
                     _state.update {
@@ -43,7 +43,7 @@ internal class QuestionViewModel constructor(
                     val questionId = _state.value.question?.id ?: ""
                     val current = repository.nextQuestion(
                         questionnaireId = action.questionnaireId,
-                        takerId = "25afc1f8-9f63-4b0f-9fa2-653436419441",
+                        takerId = action.takerId,
                         next = NextQuestion(
                             current = questionId,
                             answers = _state.value.answers
@@ -65,7 +65,7 @@ internal class QuestionViewModel constructor(
                 viewModelScope.launch {
                     val current = repository.previousQuestion(
                         questionnaireId = action.questionnaireId,
-                        takerId = "25afc1f8-9f63-4b0f-9fa2-653436419441"
+                        takerId = action.takerId
                     )
 
                     _state.update {

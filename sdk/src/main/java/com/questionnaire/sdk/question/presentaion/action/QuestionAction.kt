@@ -6,15 +6,18 @@ import com.questionnaire.sdk.question.domain.model.QuestionType
 sealed interface QuestionAction {
 
     data class GetCurrentQuestion(
-        val questionnaireId: String
+        val questionnaireId: String,
+        val takerId: String
     ): QuestionAction
 
     data class GetNextQuestion(
         val questionnaireId: String,
+        val takerId: String
     ): QuestionAction
 
     data class GetPreviousQuestion(
-        val questionnaireId: String
+        val questionnaireId: String,
+        val takerId: String
     ): QuestionAction
 
     data class OnBooleanAnswerChange(

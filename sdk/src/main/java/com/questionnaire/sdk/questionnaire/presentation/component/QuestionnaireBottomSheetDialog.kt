@@ -25,6 +25,7 @@ import com.questionnaire.sdk.question.presentaion.action.QuestionAction
 import com.questionnaire.sdk.question.presentaion.component.QuestionView
 import com.questionnaire.sdk.question.presentaion.viewmodel.QuestionViewModel
 import com.questionnaire.sdk.questionnaire.presentation.viewmodel.QuestionnaireViewModel
+import com.questionnaire.sdk.user.presentation.viewmodel.UserViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,10 +38,16 @@ internal fun QuestionnaireBottomSheetDialog(
     val questionViewModel: QuestionViewModel = koinViewModel()
     val questionState by questionViewModel.state.collectAsState()
 
-    LaunchedEffect(key1 = Unit, block = {
-        questionViewModel.dispatch(QuestionAction.GetCurrentQuestion(
-            questionnaireId = id
-        ))
+     val userViewModel: UserViewModel = koinViewModel()
+    val user by userViewModel.state.collectAsState()
+
+    LaunchedEffect(key1 = user, block = {
+        user?.let {
+            questionViewModel.dispatch(QuestionAction.GetCurrentQuestion(
+                questionnaireId = id,
+                takerId = it.id
+            ))
+        }
     })
 
     ModalBottomSheet(
@@ -80,7 +87,8 @@ internal fun QuestionnaireBottomSheetDialog(
                     questionState.previous?.let {
                         Button(onClick = {
                             questionViewModel.dispatch(QuestionAction.GetPreviousQuestion(
-                                questionnaireId = id
+                                questionnaireId = id,
+                                takerId = user?.id ?: ""
                             ))
                         }) {
                             Text(text = "Previous")
@@ -92,7 +100,8 @@ internal fun QuestionnaireBottomSheetDialog(
                     Button(
                         onClick = {
                             questionViewModel.dispatch(QuestionAction.GetNextQuestion(
-                                questionnaireId = id
+                                questionnaireId = id,
+                                takerId = user?.id ?: ""
                             ))
                         },
                         enabled = questionState.answers.isNotEmpty()
