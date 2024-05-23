@@ -17,6 +17,7 @@ jobs:
       - name: Generate Secretes File
         run: |
           touch gradle.properties
+          echo "\n" >> gradle.properties
           echo "gpr.user=${{ secrets.GRADLE_USERNAME }}" >> gradle.properties
           echo "gpr.key=${{ secrets.GRADLE_KEY }}" >> gradle.properties
           echo "tag.version=${{ env.RELEASE_VERSION }}" >> gradle.properties
