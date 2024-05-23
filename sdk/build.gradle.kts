@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("plugin.compose")
     kotlin("plugin.serialization")
-    `maven-publish`
+    id("maven-publish")
 }
 
 group = "com.questionnaire"
@@ -85,13 +85,38 @@ dependencies {
 }
 
 publishing {
+
+    publications {
+        create<MavenPublication>("SdkReleaseAar") {
+            artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
+            groupId = groupId
+            version = version
+            withBuildIdentifier()
+
+            pom {
+                withXml {
+                    val dependenciesNode = asNode().appendNode("dependencies")
+                    configurations.getByName("implementation") {
+                        dependencies.forEach {
+                            val dependencyNode = dependenciesNode.appendNode("dependency")
+                            dependencyNode.appendNode("groupId", it.group)
+                            dependencyNode.appendNode("artifactId", it.name)
+                            dependencyNode.appendNode("version", it.version)
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
     repositories {
         maven {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/lavinou/questionnaires-android-sdk")
             credentials {
-                username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_USERNAME")
-                password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
+                username = project.findProperty("gpr.user") as String? ?: ""
+                password = project.findProperty("gpr.key") as String? ?: ""
             }
         }
     }

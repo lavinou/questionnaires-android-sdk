@@ -9,7 +9,7 @@ jobs:
   publish-to-github-packages:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set Github Env
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
@@ -36,6 +36,6 @@ jobs:
         with:
           gradle-version: 7.4.2
 
-      - name: Publish JVM To Github Packages
+      - name: Publish AAR To Github Packages
         run: ./gradlew publish
 
