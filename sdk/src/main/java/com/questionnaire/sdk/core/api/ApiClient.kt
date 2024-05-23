@@ -1,5 +1,7 @@
 package com.questionnaire.sdk.core.api
 
+import android.os.Build
+import com.questionnaire.sdk.BuildConfig
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.HttpRequestBuilder
@@ -23,10 +25,15 @@ internal open class ApiClient constructor(
 ) {
 
     open val baseUrl: String
-        get() = "http://192.168.4.24:8000/v1"
+        get() = "https://questionnaire-api.lavinou.com/v1"
 
     open val defaultPathParams: Map<String, String>
         get() = emptyMap()
+
+    open val defaultHeaders: Map<String, String>
+        get() = mapOf(
+            "User-Agent" to "questai-sdk/(${BuildConfig.SDK_VERSION}) (Android; ${Build.MANUFACTURER} ${Build.VERSION.RELEASE}; ${Build.MODEL})"
+        )
 
     open val tokenName: String
         get() = "Api-Key"
@@ -55,6 +62,9 @@ internal suspend inline fun <reified Response> ApiClient.get(
         setUrl(resource, queryParams)
         headers {
             header("Authorization", "$tokenName $apiKey")
+            defaultHeaders.map {
+                header(it.key, it.value)
+            }
         }
         contentType(ContentType.Application.Json)
 
@@ -77,6 +87,9 @@ internal suspend inline fun <reified Request, reified Response> ApiClient.post(
         setUrl(resource, queryParams)
         headers {
             header("Authorization", "$tokenName $apiKey")
+            defaultHeaders.map {
+                header(it.key, it.value)
+            }
         }
         setBody(data)
         contentType(ContentType.Application.Json)
@@ -98,6 +111,9 @@ internal suspend inline fun <reified Request, reified Response> ApiClient.put(
         setUrl(resource)
         headers {
             header("Authorization", "$tokenName $apiKey")
+            defaultHeaders.map {
+                header(it.key, it.value)
+            }
         }
         setBody(data)
         contentType(ContentType.Application.Json)
@@ -119,6 +135,9 @@ internal suspend inline fun <reified Request, reified Response> ApiClient.patch(
         setUrl(resource)
         headers {
             header("Authorization", "$tokenName $apiKey")
+            defaultHeaders.map {
+                header(it.key, it.value)
+            }
         }
         setBody(data)
         contentType(ContentType.Application.Json)
@@ -140,6 +159,9 @@ internal suspend inline fun <reified Request, reified Response> ApiClient.delete
         setUrl(resource)
         headers {
             header("Authorization", "$tokenName $apiKey")
+            defaultHeaders.map {
+                header(it.key, it.value)
+            }
         }
         data?.let {
             setBody(data)

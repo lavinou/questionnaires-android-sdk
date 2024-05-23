@@ -19,10 +19,7 @@ class QuestionnaireActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val questionnaireId = intent.getStringExtra(QuestionnaireId)
-
-
 
         setContent {
             MaterialTheme {

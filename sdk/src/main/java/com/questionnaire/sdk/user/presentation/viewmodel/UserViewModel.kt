@@ -13,15 +13,11 @@ internal class UserViewModel constructor(
     private val manager: UserManager
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<User?>(null)
-    val state: StateFlow<User?> = _state
+    val state: StateFlow<User?> = manager.state
 
     init {
         viewModelScope.launch {
             val user = manager.current()
-            _state.update {
-                user
-            }
         }
     }
 

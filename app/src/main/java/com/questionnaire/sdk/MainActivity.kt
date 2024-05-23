@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -12,13 +13,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.questionnaire.sdk.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val questionnaire = Questionnaire
-            .Builder(activity = this, apiKey = "1ZZEbttb.LU1SmLHe8HwdLcKICmmsT9qnDkklTHC6")
+            .Builder(activity = this, apiKey = "")
             .build()
 
         setContent {
@@ -28,8 +30,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android", onClick = {
-                        questionnaire.launch("14505320-0ba7-4ce1-b979-c5985bea7b63")
+                    Greeting("Android", onClick = { id ->
+                        questionnaire.launch(id)
                     })
                 }
             }
@@ -38,14 +40,19 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
-    Column {
+fun Greeting(name: String, onClick: (String) -> Unit, modifier: Modifier = Modifier) {
+    Column(
+        modifier = Modifier.padding(8.dp)
+    ) {
         Text(
             text = "Hello $name!",
             modifier = modifier
         )
-        Button(onClick = onClick) {
-            Text(text = "Send Event")
+
+        Button(onClick = {
+            onClick("2dbac1a7-fdae-4812-9527-58f0da2ab77d")
+        }) {
+            Text(text = "After Purchase Survey")
         }
     }
 }

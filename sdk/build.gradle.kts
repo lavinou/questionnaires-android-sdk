@@ -3,7 +3,11 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("plugin.compose")
     kotlin("plugin.serialization")
+    `maven-publish`
 }
+
+group = "com.questionnaire"
+version = project.findProperty("tag.version") ?: "0.0.0"
 
 android {
     namespace = "com.questionnaire.sdk"
@@ -17,12 +21,16 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "SDK_VERSION", "\"$version\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "SDK_VERSION", "\"$version\"")
         }
     }
     compileOptions {
@@ -35,6 +43,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
 }
@@ -73,4 +82,17 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/lavinou/questionnaires-android-sdk")
+            credentials {
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_USERNAME")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
 }
