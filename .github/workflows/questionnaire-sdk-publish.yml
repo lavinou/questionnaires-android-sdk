@@ -37,8 +37,8 @@ jobs:
           gradle-version: 7.4.2
 
       - name: Build Sdk
-        run: ./gradlew build
+        run: ./gradlew sdk:build
 
       - name: Publish AAR To Github Packages
-        run: ./gradlew publish
+        run: ./gradlew sdk:publish
 
