@@ -6,7 +6,7 @@ plugins {
     id("maven-publish")
 }
 
-group = "com.questionnaire"
+group = "com.lavinou"
 version = project.findProperty("tag.version") ?: "0.0.0"
 
 android {
@@ -90,6 +90,7 @@ publishing {
         create<MavenPublication>("SdkReleaseAar") {
             artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
             groupId = groupId
+            artifactId = "questionnaire"
             version = version
             withBuildIdentifier()
 
@@ -112,8 +113,8 @@ publishing {
 
     repositories {
         maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/lavinou/questionnaires-android-sdk")
+            name = "OSSRH"
+            url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
             credentials {
                 username = project.findProperty("gpr.user") as String? ?: ""
                 password = project.findProperty("gpr.key") as String? ?: ""
