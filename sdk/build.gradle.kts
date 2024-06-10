@@ -3,7 +3,6 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("plugin.compose")
     kotlin("plugin.serialization")
-    id("maven-publish")
 }
 
 group = "com.lavinou"
@@ -25,7 +24,7 @@ android {
             buildConfigField("String", "SDK_VERSION", "\"$version\"")
         }
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -82,43 +81,4 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-}
-
-publishing {
-
-    publications {
-        create<MavenPublication>("SdkReleaseAar") {
-            artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
-            groupId = groupId
-            artifactId = "questionnaire"
-            version = version
-            withBuildIdentifier()
-
-            pom {
-                withXml {
-                    val dependenciesNode = asNode().appendNode("dependencies")
-                    configurations.getByName("implementation") {
-                        dependencies.forEach {
-                            val dependencyNode = dependenciesNode.appendNode("dependency")
-                            dependencyNode.appendNode("groupId", it.group)
-                            dependencyNode.appendNode("artifactId", it.name)
-                            dependencyNode.appendNode("version", it.version)
-                        }
-                    }
-                }
-            }
-        }
-
-    }
-
-    repositories {
-        maven {
-            name = "OSSRH"
-            url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
-            credentials {
-                username = project.findProperty("gpr.user") as String? ?: ""
-                password = project.findProperty("gpr.key") as String? ?: ""
-            }
-        }
-    }
 }
