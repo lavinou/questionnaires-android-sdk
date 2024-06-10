@@ -1,8 +1,10 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.dokka")
     kotlin("plugin.compose")
     kotlin("plugin.serialization")
+    id("maven-publish")
 }
 
 group = "com.lavinou"
@@ -81,4 +83,69 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+}
+
+//Include jar with the lib's KDoc HTML.
+val kdocJar by tasks.registering(Jar::class) {
+    val htmlTask = tasks["dokkaHtml"]
+    dependsOn(htmlTask)
+
+    // Create the Jar from the generated HTML files.
+    from(htmlTask)
+    archiveClassifier.set("javadoc")
+}
+
+publishing {
+
+    publications {
+        create<MavenPublication>("SdkReleaseAar") {
+            artifact(kdocJar)
+            artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
+            groupId = groupId
+            artifactId = "questionnaire"
+            version = version
+            withBuildIdentifier()
+
+            pom {
+
+                val projectUrl = "github.com/lavinou/questionnaires-android-sdk"
+
+                url.set("https://$projectUrl")
+                name.set("Questionnaire")
+                description.set("Run Questionnaires on your application to get user feedback")
+
+                developers {
+                    developer {
+                        name.set("Vincent Turnier")
+                        email.set("vincent@lavinou.com")
+                    }
+                }
+
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("https://opensource.org/licenses/mit-license.php")
+                    }
+                }
+
+                scm {
+                    url.set("https://$projectUrl/tree/main")
+                    connection.set("scm:git:git://$projectUrl.git")
+                    developerConnection.set("scm:git:ssh://$projectUrl.git")
+                }
+
+                withXml {
+                    val dependenciesNode = asNode().appendNode("dependencies")
+                    configurations.getByName("implementation") {
+                        dependencies.forEach {
+                            val dependencyNode = dependenciesNode.appendNode("dependency")
+                            dependencyNode.appendNode("groupId", it.group)
+                            dependencyNode.appendNode("artifactId", it.name)
+                            dependencyNode.appendNode("version", it.version)
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
