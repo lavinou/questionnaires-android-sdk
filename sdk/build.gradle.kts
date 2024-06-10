@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.lavinou"
-version = project.findProperty("tag.version") ?: "0.0.0"
+version = project.findProperty("tag.version") ?: "0.1.13"
 
 android {
     namespace = "com.questionnaire.sdk"
