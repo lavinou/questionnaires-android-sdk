@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.lavinou"
-version = project.findProperty("tag.version") ?: "0.1.20"
+version = project.findProperty("tag.version") ?: "0.1.21"
 
 android {
     namespace = "com.lavinou.questionnaire"
@@ -98,10 +98,7 @@ val kdocJar by tasks.registering(Jar::class) {
 val releaseAar by tasks.registering(Jar::class) {
     val build = tasks["build"]
     dependsOn(build)
-
-    // Create the Jar from the generated HTML files.
     from(build)
-    archiveClassifier.set("releaseaar")
 }
 
 publishing {
