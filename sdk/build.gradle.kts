@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.lavinou"
-version = project.findProperty("tag.version") ?: "0.1.27"
+version = project.findProperty("tag.version") ?: "0.1.28"
 
 android {
     namespace = "com.lavinou.questionnaire"
@@ -26,11 +26,11 @@ android {
             buildConfigField("String", "SDK_VERSION", "\"$version\"")
         }
         release {
-//            isMinifyEnabled = true
-//            proguardFiles(
-//                getDefaultProguardFile("proguard-android-optimize.txt"),
-//                "proguard-rules.pro"
-//            )
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
             buildConfigField("String", "SDK_VERSION", "\"$version\"")
         }
     }
@@ -99,6 +99,7 @@ val releaseAar by tasks.registering(Jar::class) {
     val build = tasks["build"]
     dependsOn(build)
     from(build)
+    archiveClassifier.set("releaseaar")
 }
 
 publishing {
