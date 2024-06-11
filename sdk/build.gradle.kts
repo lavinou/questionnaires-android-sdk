@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.lavinou"
-version = project.findProperty("tag.version") ?: "0.1.13"
+version = project.findProperty("tag.version") ?: "0.1.14"
 
 android {
     namespace = "com.questionnaire.sdk"
@@ -95,53 +95,55 @@ val kdocJar by tasks.registering(Jar::class) {
     archiveClassifier.set("javadoc")
 }
 
-publishing {
+project.afterEvaluate {
+    publishing {
 
-    publications {
-        create<MavenPublication>("SdkReleaseAar") {
-            artifact(kdocJar)
-            artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
-            groupId = groupId
-            artifactId = "questionnaire"
-            version = version
-            withBuildIdentifier()
+        publications {
+            create<MavenPublication>("SdkReleaseAar") {
+                artifact(kdocJar)
+                artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
+                groupId = groupId
+                artifactId = "questionnaire"
+                version = version
+                withBuildIdentifier()
 
-            pom {
+                pom {
 
-                val projectUrl = "github.com/lavinou/questionnaires-android-sdk"
+                    val projectUrl = "github.com/lavinou/questionnaires-android-sdk"
 
-                url.set("https://$projectUrl")
-                name.set("Questionnaire")
-                description.set("Run Questionnaires on your application to get user feedback")
+                    url.set("https://$projectUrl")
+                    name.set("Questionnaire")
+                    description.set("Run Questionnaires on your application to get user feedback")
 
-                developers {
-                    developer {
-                        name.set("Vincent Turnier")
-                        email.set("vincent@lavinou.com")
+                    developers {
+                        developer {
+                            name.set("Vincent Turnier")
+                            email.set("vincent@lavinou.com")
+                        }
                     }
-                }
 
-                licenses {
-                    license {
-                        name.set("MIT License")
-                        url.set("https://opensource.org/licenses/mit-license.php")
+                    licenses {
+                        license {
+                            name.set("MIT License")
+                            url.set("https://opensource.org/licenses/mit-license.php")
+                        }
                     }
-                }
 
-                scm {
-                    url.set("https://$projectUrl/tree/main")
-                    connection.set("scm:git:git://$projectUrl.git")
-                    developerConnection.set("scm:git:ssh://$projectUrl.git")
-                }
+                    scm {
+                        url.set("https://$projectUrl/tree/main")
+                        connection.set("scm:git:git://$projectUrl.git")
+                        developerConnection.set("scm:git:ssh://$projectUrl.git")
+                    }
 
-                withXml {
-                    val dependenciesNode = asNode().appendNode("dependencies")
-                    configurations.getByName("implementation") {
-                        dependencies.forEach {
-                            val dependencyNode = dependenciesNode.appendNode("dependency")
-                            dependencyNode.appendNode("groupId", it.group)
-                            dependencyNode.appendNode("artifactId", it.name)
-                            dependencyNode.appendNode("version", it.version)
+                    withXml {
+                        val dependenciesNode = asNode().appendNode("dependencies")
+                        configurations.getByName("implementation") {
+                            dependencies.forEach {
+                                val dependencyNode = dependenciesNode.appendNode("dependency")
+                                dependencyNode.appendNode("groupId", it.group)
+                                dependencyNode.appendNode("artifactId", it.name)
+                                dependencyNode.appendNode("version", it.version)
+                            }
                         }
                     }
                 }
