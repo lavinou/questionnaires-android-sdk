@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.lavinou"
-version = project.findProperty("tag.version") ?: "0.1.25"
+version = project.findProperty("tag.version") ?: "0.1.27"
 
 android {
     namespace = "com.lavinou.questionnaire"
@@ -26,11 +26,11 @@ android {
             buildConfigField("String", "SDK_VERSION", "\"$version\"")
         }
         release {
-            isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+//            isMinifyEnabled = true
+//            proguardFiles(
+//                getDefaultProguardFile("proguard-android-optimize.txt"),
+//                "proguard-rules.pro"
+//            )
             buildConfigField("String", "SDK_VERSION", "\"$version\"")
         }
     }
