@@ -1,3 +1,4 @@
+[![](https://jitpack.io/v/lavinou/questionnaires-android-sdk.svg)](https://jitpack.io/#lavinou/questionnaires-android-sdk)
 ---
 # [Lavinou Questionnaire SDK](https://questionnaire.lavinou.com)
 ---
