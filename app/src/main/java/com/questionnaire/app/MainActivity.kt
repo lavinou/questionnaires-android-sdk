@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val questionnaire = Questionnaire
-            .Builder(activity = this, apiKey = "gfR1zI5N.zYMWaQlB40RM7dOypYMtsohOifEptWHW")
+            .Builder(activity = this, apiKey = "<api-key>")
             .build()
 
         setContent {
@@ -51,7 +51,7 @@ fun Greeting(name: String, onClick: (String) -> Unit, modifier: Modifier = Modif
         )
 
         Button(onClick = {
-            onClick("2dbac1a7-fdae-4812-9527-58f0da2ab77d")
+            onClick("<project-key>")
         }) {
             Text(text = "After Purchase Survey")
         }
