@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.lavinou.questionnaire.Questionnaire
+import com.lavinou.questionnaire
 import com.questionnaire.app.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
