@@ -1,7 +1,6 @@
 [![](https://jitpack.io/v/lavinou/questionnaires-android-sdk.svg)](https://jitpack.io/#lavinou/questionnaires-android-sdk)
----
-# [Lavinou Questionnaire SDK](https://questionnaire.lavinou.com)
----
+# [Lavinou Questionnaire Developer](https://questionnaire.lavinou.com/developer)
+
 ## Introduction
 Welcome to the Questionnaire SDK repository. Here you will learn how to use the Questionnaire
 SDK for Android Applications.
