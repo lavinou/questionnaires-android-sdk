@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.lavinou"
-version = project.findProperty("tag.version") ?: "0.1.15"
+version = project.findProperty("tag.version") ?: "0.1.16"
 
 android {
     namespace = "com.questionnaire.sdk"
@@ -95,8 +95,8 @@ val kdocJar by tasks.registering(Jar::class) {
     archiveClassifier.set("javadoc")
 }
 
-tasks.named("publishSdkReleaseAarPublicationToMavenLocal") {
-    mustRunAfter("bundleReleaseAar")
+tasks.named(":sdk:publishSdkReleaseAarPublicationToMavenLocal") {
+    mustRunAfter(":sdk:bundleReleaseAar")
 }
 
 publishing {
