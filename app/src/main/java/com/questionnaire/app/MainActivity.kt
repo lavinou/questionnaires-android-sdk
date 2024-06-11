@@ -14,15 +14,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-//import com.lavinou.questionnaire.Questionnaire
+import com.lavinou.questionnaire.Questionnaire
 import com.questionnaire.app.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        val questionnaire = Questionnaire
-//            .Builder(activity = this, apiKey = "")
-//            .build()
+        val questionnaire = Questionnaire
+            .Builder(activity = this, apiKey = "gfR1zI5N.zYMWaQlB40RM7dOypYMtsohOifEptWHW")
+            .build()
 
         setContent {
             MyApplicationTheme {
@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Greeting("Android", onClick = { id ->
-//                        questionnaire.launch(id)
+                        questionnaire.launch(id)
                     })
                 }
             }

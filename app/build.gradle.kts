@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.questionnaire.sdk"
+    namespace = "com.questionnaire.app"
     compileSdk = 34
 
     defaultConfig {
@@ -59,7 +59,6 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     implementation(project(":sdk"))
-//    implementation("com.github.lavinou:questionnaires-android-sdk:0.1.25")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
