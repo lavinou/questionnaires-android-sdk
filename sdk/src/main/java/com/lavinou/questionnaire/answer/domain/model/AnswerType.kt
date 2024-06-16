@@ -1,6 +1,6 @@
-package com.lavinou.questionnaire.question.domain.model
+package com.lavinou.questionnaire.answer.domain.model
 
-internal enum class QuestionType {
+internal enum class AnswerType {
     TEXT,
     RADIO,
     BOOLEAN,
@@ -9,7 +9,7 @@ internal enum class QuestionType {
 
     companion object {
 
-        fun from(value: String): QuestionType {
+        fun from(value: String): AnswerType {
             return when (value) {
                 "text" -> TEXT
                 "radio" -> RADIO

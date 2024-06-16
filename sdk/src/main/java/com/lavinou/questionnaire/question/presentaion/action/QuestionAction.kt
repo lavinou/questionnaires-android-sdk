@@ -1,5 +1,7 @@
 package com.lavinou.questionnaire.question.presentaion.action
 
+import com.lavinou.questionnaire.answer.domain.model.CurrentAnswer
+
 internal sealed interface QuestionAction {
 
     data class GetCurrentQuestion(
@@ -9,7 +11,8 @@ internal sealed interface QuestionAction {
 
     data class GetNextQuestion(
         val questionnaireId: String,
-        val takerId: String
+        val takerId: String,
+        val answers: List<CurrentAnswer>
     ) : QuestionAction
 
     data class GetPreviousQuestion(
@@ -17,24 +20,4 @@ internal sealed interface QuestionAction {
         val takerId: String
     ) : QuestionAction
 
-    data class OnBooleanAnswerChange(
-        val id: String
-    ) : QuestionAction
-
-    data class OnRadioAnswerChange(
-        val id: String
-    ) : QuestionAction
-
-    data class OnCheckBoxAnswerChange(
-        val id: String
-    ) : QuestionAction
-
-    data class OnTextAnswerChange(
-        val data: String,
-        val id: String
-    ) : QuestionAction
-
-    data class OnSelectAnswerChange(
-        val id: String
-    ) : QuestionAction
 }

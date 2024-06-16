@@ -2,6 +2,7 @@ package com.lavinou.questionnaire
 
 import android.content.Intent
 import androidx.activity.ComponentActivity
+import com.lavinou.questionnaire.answer.di.answerModule
 import com.lavinou.questionnaire.core.di.apiModule
 import com.lavinou.questionnaire.question.di.questionModule
 import com.lavinou.questionnaire.questionnaire.di.questionnaireModule
@@ -22,7 +23,8 @@ class Questionnaire private constructor(private val builder: Builder) {
                     apiModule(apiKey = builder.apiKey),
                     userModule(context = builder.activity),
                     questionnaireModule(),
-                    questionModule()
+                    questionModule(),
+                    answerModule()
                 )
             )
         }

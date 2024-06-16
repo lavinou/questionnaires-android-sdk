@@ -24,7 +24,10 @@ class QuestionnaireActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 scope.launch {
-                    userManager.current()
+                    val user = userManager.current()
+                    if (user == null) {
+                        finish()
+                    }
                 }
                 questionnaireId?.let {
                     QuestionnaireBottomSheetDialog(

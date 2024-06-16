@@ -19,6 +19,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.lavinou.questionnaire.answer.presentation.action.AnswerAction
+import com.lavinou.questionnaire.answer.presentation.viewmodel.AnswerViewModel
 import com.lavinou.questionnaire.question.domain.model.QuestionStatus
 import com.lavinou.questionnaire.question.presentaion.action.QuestionAction
 import com.lavinou.questionnaire.question.presentaion.component.QuestionView
@@ -38,6 +40,9 @@ internal fun QuestionnaireBottomSheetDialog(
 
     val userViewModel: UserViewModel = koinViewModel()
     val user by userViewModel.state.collectAsState()
+
+    val answerViewModel: AnswerViewModel = koinViewModel()
+    val answerState by answerViewModel.state.collectAsState()
 
     LaunchedEffect(key1 = user, block = {
         user?.let {
@@ -64,8 +69,8 @@ internal fun QuestionnaireBottomSheetDialog(
             questionState.question?.let { question ->
                 QuestionView(
                     question = question,
-                    selectedAnswers = questionState.answers,
-                    onAction = questionViewModel::dispatch
+                    selectedAnswers = answerState.answers,
+                    onAction = answerViewModel::dispatch
                 )
             }
 
@@ -97,6 +102,7 @@ internal fun QuestionnaireBottomSheetDialog(
                                     takerId = user?.id ?: ""
                                 )
                             )
+                            answerViewModel.dispatch(AnswerAction.OnClearAnswers)
                         }) {
                             Text(text = "Previous")
                         }
@@ -109,11 +115,12 @@ internal fun QuestionnaireBottomSheetDialog(
                             questionViewModel.dispatch(
                                 QuestionAction.GetNextQuestion(
                                     questionnaireId = id,
-                                    takerId = user?.id ?: ""
+                                    takerId = user?.id ?: "",
+                                    answers = answerState.answers
                                 )
                             )
                         },
-                        enabled = questionState.answers.isNotEmpty()
+                        enabled = answerState.answers.isNotEmpty()
                     ) {
                         Text(text = "Next")
                     }
